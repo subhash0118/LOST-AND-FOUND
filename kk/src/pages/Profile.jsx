@@ -3,7 +3,7 @@ const ProfilePage = () => {
     return (
       <div className="flex flex-col items-center bg-gray-100 min-h-screen py-8">
         {/* Profile Picture Section */}
-        <div className="w-75 h-75 bg-black text-white rounded-full flex items-center justify-center shadow-lg">
+        <div className="w-75 h-75 bg-gray-400 text-white rounded-full flex items-center justify-center shadow-lg">
           <span className="text-white font-semibold">Profile Pic</span>
         </div>
         <h2 className="text-2xl font-bold mt-4 text-gray-800">Your Name</h2>

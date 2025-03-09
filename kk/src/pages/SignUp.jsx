@@ -127,11 +127,11 @@ const SignUp = () => {
              <div>
               <label className="block text-sm font-medium text-gray-700">Roll Number</label>
               <input
-                name="name"
+               rollnumber="rollnumber"
                 type="text"
                 required
                 className="mt-1 block w-full px-3 py-2 border rounded-md"
-                value={formData.name}
+                value={formData.rollnumber}
                 onChange={handleChange}
               />
             </div>
