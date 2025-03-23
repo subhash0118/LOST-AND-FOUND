@@ -17,13 +17,36 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log("MongoDB connection error:", err));
 
-// User Schema
+// Middleware to verify JWT token
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: "Unauthorized: No token provided" });
+  }
+  
+  const token = authHeader.split(' ')[1];
+  
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.userId;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Unauthorized: Invalid token" });
+  }
+};
+
+// User Schema - Updated with additional fields
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String },
     otp: { type: String },
-    otpExpires: { type: Date }
+    otpExpires: { type: Date },
+    rollNumber: { type: String },
+    mobileNumber: { type: String },
+    yearOfStudy: { type: String },
+    branch: { type: String }
 });
 
 const User = mongoose.model('User', UserSchema);
@@ -134,6 +157,51 @@ app.post('/login', async (req, res) => {
         res.status(200).json({ message: "Login successful", token, user });
     } catch (error) {
         console.error("Error in login:", error);
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+
+// Get User Profile Endpoint
+app.get('/user/profile', verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select('-password -otp -otpExpires');
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        res.status(200).json({ user });
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+
+// Update User Profile Endpoint
+app.put('/user/update-profile', verifyToken, async (req, res) => {
+    try {
+        const { username, rollNumber, mobileNumber, yearOfStudy, branch } = req.body;
+        
+        // Find user and update
+        const updatedUser = await User.findByIdAndUpdate(
+            req.userId,
+            { 
+                username, 
+                rollNumber, 
+                mobileNumber, 
+                yearOfStudy, 
+                branch 
+            },
+            { new: true }
+        ).select('-password -otp -otpExpires');
+        
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+    } catch (error) {
+        console.error("Error updating user profile:", error);
         res.status(500).json({ message: "Server error", error });
     }
 });

@@ -1,15 +1,13 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { FaUserCircle } from "react-icons/fa"; // Import profile icon
+import { Link, useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar1 = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if the token exists in localStorage
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // Convert token existence to boolean
-  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <nav className="flex items-center justify-between px-4 py-4 bg-[#ECEBDE] shadow-md">
@@ -18,16 +16,17 @@ const Navbar1 = () => {
         <span className="ml-2 text-xl font-semibold">FoundIT</span>
       </div>
       <div className="flex items-center space-x-6">
-        <Link to="/" className="text-gray-600 hover:text-gray-900">Home</Link>
-
-        {isLoggedIn ? (
-          <Link to="/profile" className="flex items-center text-gray-600 hover:text-gray-900">
-            <FaUserCircle className="text-2xl mr-2" />
-            Profile
-          </Link>
-        ) : (
-          <Link to="/login" className="px-4 py-2 bg-black text-white rounded">LOGIN</Link>
-        )}
+        <Link to="/dashboard" className="text-gray-600 hover:text-gray-900">Dashboard</Link>
+        <Link to="/profile" className="flex items-center text-gray-600 hover:text-gray-900">
+          <FaUserCircle className="text-2xl mr-2" />
+          Profile
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+        >
+          Logout
+        </button>
       </div>
     </nav>
   );

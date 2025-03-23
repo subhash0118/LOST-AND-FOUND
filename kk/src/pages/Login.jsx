@@ -1,42 +1,49 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+"use client"
+
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  });
+  })
 
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-  
+    e.preventDefault()
+    setLoading(true)
+
     try {
-      const response = await axios.post("http://localhost:5000/login", formData);
-  
-      setMessage(response.data.message);
-      setError("");
-  
+      const response = await axios.post("http://localhost:5000/login", formData)
+
+      setMessage(response.data.message)
+      setError("")
+
       // Save token in localStorage
-      localStorage.setItem("token", response.data.token);
-  
-      // Redirect user (update this based on your app)
-      window.location.href = "/dashboard"; 
+      localStorage.setItem("token", response.data.token)
+
+      // Redirect user to dashboard
+      navigate("/dashboard")
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed");
+      setError(error.response?.data?.message || "Login failed")
+    } finally {
+      setLoading(false)
     }
-  };
-  
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#D7D3BF] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-[#ECEBDE] p-8 rounded-lg shadow">
@@ -82,12 +89,12 @@ const Login = () => {
             </div>
           </div>
 
-
           <button
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+            disabled={loading}
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:opacity-70"
           >
-            LOGIN
+            {loading ? "LOGGING IN..." : "LOGIN"}
           </button>
 
           {message && <p className="text-center text-green-500 mt-4">{message}</p>}
@@ -104,7 +111,8 @@ const Login = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
+
