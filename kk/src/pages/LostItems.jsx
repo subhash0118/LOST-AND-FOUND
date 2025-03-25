@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { ItemsContext } from "./ItemsContext";
 
 const LostItems = () => {
-  const { items, deleteItem } = useContext(ItemsContext);
+  const { lostItems, deleteLostItem } = useContext(ItemsContext);
   const [selectedItem, setSelectedItem] = useState(null);
+  if (!lostItems) return <p>Loading...</p>;
 
   return (
     <div className="min-h-screen bg-[#D7D3BF] flex flex-col items-center justify-center gap-16 p-8">
@@ -13,7 +14,7 @@ const LostItems = () => {
       </div>
 
       <Link to="/additems">
-        <div className="w-full max-w-4xl h-64 bg-gray-300 flex items-center justify-center rounded-2xl">
+        <div className="w-full max-w-4xl h-64 flex items-center justify-center rounded-2xl">
           <img
             src="add1.png"
             className="h-36 w-36 object-cover rounded-2xl"
@@ -23,7 +24,7 @@ const LostItems = () => {
       </Link>
 
       <div className="flex flex-wrap justify-center gap-8">
-        {items.map((item, index) => (
+        {lostItems.map((item, index) => (
           <div
             key={index}
             onClick={() => setSelectedItem(item)}
@@ -41,8 +42,8 @@ const LostItems = () => {
 
       {/* Modal for showing uploader details */}
       {selectedItem && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-xl shadow-xl w-80">
+        <div className="fixed inset-0 bg-[#D7D3BF] bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-xl shadow-xl w-96">
             <h2 className="text-xl font-bold mb-4">Uploader Details</h2>
             <p><strong>Name:</strong> {selectedItem.uploaderName}</p>
             <p><strong>Time:</strong> {selectedItem.uploadTime}</p>
@@ -52,16 +53,16 @@ const LostItems = () => {
             <div className="flex justify-between mt-6">
               <button
                 onClick={() => {
-                  deleteItem(selectedItem.id);
+                  deleteLostItem(selectedItem.id);
                   setSelectedItem(null);
                 }}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg"
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-300 cursor-pointer "
               >
                 Delete
               </button>
               <button
                 onClick={() => setSelectedItem(null)}
-                className="px-4 py-2 bg-gray-300 rounded-lg"
+                className="px-4 py-2 bg-black/50 hover:bg-gray-300 rounded-lg cursor-pointer"
               >
                 Close
               </button>

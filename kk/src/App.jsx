@@ -9,6 +9,7 @@ import LostItems from "./pages/LostItems";
 import FoundItems from "./pages/FoundItems";
 import Dashboard from "./pages/Dashboard";
 import AddItems from "./pages/AddItems";
+import AddItemsF from "./pages/AddItemsF";
 import { ItemsProvider } from "./pages/ItemsContext";
 import Profile from "./pages/Profile";
 
@@ -42,6 +43,7 @@ const MainApp = () => {
           <Route path="/founditems" element={<FoundItems />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/additems" element={<AddItems />} />
+          <Route path="/additemsf" element={<AddItemsF />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </ItemsProvider>

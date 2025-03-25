@@ -2,8 +2,8 @@ import { useState, useContext } from "react";
 import { ItemsContext } from "./ItemsContext";
 import { useNavigate } from "react-router-dom";
 
-const AddItems = () => {
-  const { addLostItem } = useContext(ItemsContext);
+const AddItemsF = () => {
+  const { addFoundItem } = useContext(ItemsContext);
   const navigate = useNavigate();
 
   const [imageFile, setImageFile] = useState(null);
@@ -28,8 +28,8 @@ const AddItems = () => {
         mobileNumber,
         uploadTime: new Date().toLocaleString(),
       };
-      addLostItem(newItem);
-      navigate("/lostitems");
+      addFoundItem(newItem);
+      navigate("/founditems");
     };
     reader.readAsDataURL(imageFile);
   };
@@ -37,7 +37,7 @@ const AddItems = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#D7D3BF]">
   <h1 className="text-4xl mb-8 text-black font-semibold tracking-wide">
-    Add New Lost Item
+    Add New Found Item
   </h1>
   <form
     onSubmit={handleSubmit}
@@ -90,7 +90,7 @@ const AddItems = () => {
       type="submit"
       className="w-full py-3 bg-black text-white font-bold rounded-lg hover:bg-[#C1BAA1] transition-all"
     >
-      Add LostItem
+      Add FoundItem
     </button>
   </form>
 </div>
@@ -98,4 +98,4 @@ const AddItems = () => {
   );
 };
 
-export default AddItems;
+export default AddItemsF;
