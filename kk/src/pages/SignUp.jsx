@@ -104,7 +104,7 @@ const SignUp = () => {
                 <button
                   type="button"
                   onClick={sendOTP}
-                  className=" text-sm flex items-center justify-end font-medium text-indigo-600 hover:text-indigo-500"
+                  className=" text-sm flex items-center justify-end font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
                 >
                   Verify Email
                 </button>

@@ -96,10 +96,10 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center bg-gray-100 min-h-screen py-8">
+    <div className="flex flex-col items-center bg-[#D7D3BF] min-h-screen py-8">
       {/* Profile Picture Section */}
-      <div className="w-24 h-24 bg-gray-400 text-white rounded-full flex items-center justify-center shadow-lg">
-        <span className="text-white font-semibold">
+      <div className="w-24 h-24 bg-gray-200 text-black rounded-full flex items-center justify-center shadow-lg">
+        <span className="text-black font-semibold">
           {userData.username ? userData.username.charAt(0).toUpperCase() : "U"}
         </span>
       </div>
@@ -109,13 +109,13 @@ const ProfilePage = () => {
       {/* Logout Button */}
       <button
         onClick={handleLogout}
-        className="mt-2 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+        className="mt-2 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition cursor-pointer"
       >
         Logout
       </button>
 
       {/* Profile Form */}
-      <div className="mt-6 w-full max-w-md bg-white p-6 shadow-md rounded-lg">
+      <div className="mt-6 w-full max-w-md bg-[#ECEBDE] p-6 shadow-md rounded-lg">
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -137,7 +137,7 @@ const ProfilePage = () => {
               name="email"
               value={userData.email || ""}
               disabled
-              className="w-full p-2 border rounded-md bg-gray-100"
+              className="w-full p-2 border rounded-md bg-gray-200"
             />
             <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
           </div>
@@ -187,7 +187,7 @@ const ProfilePage = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition"
+            className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition cursor-pointer"
           >
             Update Profile
           </button>
