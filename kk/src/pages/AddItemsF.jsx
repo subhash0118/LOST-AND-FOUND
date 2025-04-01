@@ -41,7 +41,7 @@ const AddItemsF = () => {
   </h1>
   <form
     onSubmit={handleSubmit}
-    className="flex flex-col gap-5 w-full max-w-lg bg-[#ECEBDE] p-8 rounded-2xl shadow-2xl"
+    className="flex flex-col gap-5 w-full max-w-lg bg-[#ECEBDE] p-8 rounded-2xl shadow-2xl "
   >
     <input
       type="file"
@@ -79,10 +79,17 @@ const AddItemsF = () => {
     />
 
     <input
-      type="text"
-      placeholder="Mobile Number"
-      value={mobileNumber}
-      onChange={(e) => setMobileNumber(e.target.value)}
+     type="tel"
+     placeholder="Mobile Number"
+     value={mobileNumber}
+     maxLength="10"
+     onChange={(e) => {
+       const value = e.target.value;
+       // Allow only numbers
+       if (/^\d*$/.test(value)) {
+         setMobileNumber(value);
+       }
+     }}
       className="w-full p-3 bg-[#ECEBDE] text-black border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
     />
 

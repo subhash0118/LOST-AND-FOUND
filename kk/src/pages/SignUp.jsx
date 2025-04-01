@@ -162,7 +162,7 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full py-2 border rounded bg-black text-white hover:bg-gray-800"
+            className="w-full py-2 border rounded bg-black text-white hover:bg-gray-800 cursor-pointer"
           >
             SIGNUP
           </button>
